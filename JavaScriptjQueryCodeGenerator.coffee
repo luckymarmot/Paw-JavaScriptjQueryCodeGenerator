@@ -4,7 +4,7 @@ require "URI.js"
 addslashes = (str) ->
     ("#{str}").replace(/[\\"]/g, '\\$&')
 
-PythonRequestsCodeGenerator = ->
+JavaScriptjQueryCodeGenerator = ->
 
     @url = (request) ->
         url_params_object = (() ->
@@ -41,7 +41,7 @@ PythonRequestsCodeGenerator = ->
         if json_body
             return {
                 "has_json_body":true
-                "json_body_object":@json_body_object json_body, 2
+                "json_body_object":@json_body_object json_body, 0
             }
 
         url_encoded_body = request.urlEncodedBody
@@ -52,16 +52,6 @@ PythonRequestsCodeGenerator = ->
                     "name": addslashes name
                     "value": addslashes value
                 } for name, value of url_encoded_body)
-            }
-
-        multipart_body = request.multipartBody
-        if multipart_body 
-            return {
-                "has_multipart_body":true
-                "multipart_body": ({
-                    "name": addslashes name
-                    "value": addslashes value
-                } for name, value of multipart_body)
             }
 
         raw_body = request.body
@@ -78,13 +68,13 @@ PythonRequestsCodeGenerator = ->
 
     @json_body_object = (object, indent = 0) ->
         if object == null
-            s = "None"
+            s = "null"
         else if typeof(object) == 'string'
             s = "\"#{addslashes object}\""
         else if typeof(object) == 'number'
             s = "#{object}"
         else if typeof(object) == 'boolean'
-            s = "#{if object then "True" else "False"}"
+            s = "#{if object then "true" else "false"}"
         else if typeof(object) == 'object'
             indent_str = Array(indent + 2).join('    ')
             indent_str_children = Array(indent + 3).join('    ')
@@ -104,20 +94,19 @@ PythonRequestsCodeGenerator = ->
 
         view =
             "request": context.getCurrentRequest()
-            "method": request.method.toLowerCase()
             "url": @url request
             "headers": @headers request
             "body": @body request
 
-        template = readFile "python.mustache"
+        template = readFile "javascript.mustache"
         Mustache.render template, view
 
     return
 
 
-PythonRequestsCodeGenerator.identifier =
-    "com.luckymarmot.PawExtensions.PythonRequestsCodeGenerator";
-PythonRequestsCodeGenerator.title =
-    "Python (Requests)";
+JavaScriptjQueryCodeGenerator.identifier =
+    "com.luckymarmot.PawExtensions.JavaScriptjQueryCodeGenerator";
+JavaScriptjQueryCodeGenerator.title =
+    "JavaScript (jQuery)";
 
-registerCodeGenerator PythonRequestsCodeGenerator
+registerCodeGenerator JavaScriptjQueryCodeGenerator
