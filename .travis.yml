@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- '0.10'
+before_install:
+- npm install coffee-script
+before_script:
+- ./node_modules/.bin/cake archive
+script:
+- ./node_modules/.bin/cake test
+deploy:
+  provider: releases
+  api_key:
+    secure: CYKPnIwHxOyk/qFAA7MFi0NBmUWcZdHqOUzyyRAhX4MqMwJTIxWDSGfNXV5kvnV31ZCIwCDYhePs2Qq9+qB6OtESRHQIPgys6+1ADmesMH57as6krQT1iioF0Kpm7+1kjejkilPTtLQqe3S/sXjp9wRAvstL7aV2asQ0PFoN1fI=
+  file: build/JavaScriptjQueryCodeGenerator.zip
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    repo: LuckyMarmot/Paw-JavaScriptjQueryCodeGenerator
