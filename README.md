@@ -2,13 +2,29 @@
 
 # JavaScript jQuery Code Generator (Paw Extension)
 
-This a Paw Extension that generates code for JavaScript AJAX requests with jQuery.
+A [Paw Extension](http://luckymarmot.com/paw/extensions/) that generates JavaScript code for AJAX requests using [jQuery](http://jquery.com/).
 
 ## Installation
 
-* `npm install`
-* `cake build`
-* `cake install`
+Easily install this Paw Extension: [Install JavaScript + jQuery Code Generator](http://luckymarmot.com/paw/extensions/JavaScriptjQueryCodeGenerator)
+
+## Development
+
+### Build & Install
+
+```shell
+npm install
+cake build
+cake install
+```
+
+### Watch
+
+During development, watch for changes:
+
+```shell
+cake watch
+```
 
 ## License
 
