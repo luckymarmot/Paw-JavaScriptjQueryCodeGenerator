@@ -109,5 +109,6 @@ JavaScriptjQueryCodeGenerator.identifier =
 JavaScriptjQueryCodeGenerator.title =
     "JavaScript (jQuery)"
 JavaScriptjQueryCodeGenerator.fileExtension = "js"
+JavaScriptjQueryCodeGenerator.languageHighlighter = "javascript"
 
 registerCodeGenerator JavaScriptjQueryCodeGenerator
