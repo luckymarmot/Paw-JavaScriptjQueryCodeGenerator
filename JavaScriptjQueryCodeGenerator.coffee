@@ -105,8 +105,9 @@ JavaScriptjQueryCodeGenerator = ->
 
 
 JavaScriptjQueryCodeGenerator.identifier =
-    "com.luckymarmot.PawExtensions.JavaScriptjQueryCodeGenerator";
+    "com.luckymarmot.PawExtensions.JavaScriptjQueryCodeGenerator"
 JavaScriptjQueryCodeGenerator.title =
-    "JavaScript (jQuery)";
+    "JavaScript (jQuery)"
+JavaScriptjQueryCodeGenerator.fileExtension = "js"
 
 registerCodeGenerator JavaScriptjQueryCodeGenerator
