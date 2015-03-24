@@ -35,13 +35,16 @@ $.ajax({
     {{/body.has_url_encoded_body}}
     {{#body.has_json_body}}
     contentType:"application/json",
-    data:JSON.stringify({{{body.json_body_object}}}),
+    data:JSON.stringify({{{body.json_body_object}}})
     {{/body.has_json_body}}
-    success:function(data, textStatus, jqXHR){
-        console.log("HTTP Request Succeeded: " + jqXHR.status);
-        console.log(data);
-    },
-    error:function(jqXHR, textStatus, errorThrown){
-        console.log("HTTP Request Failed");
-    }
+})
+.done(function(data, textStatus, jqXHR) {
+    console.log("HTTP Request Succeeded: " + jqXHR.status);
+    console.log(data);
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("HTTP Request Failed");
+})
+.always(function() {
+    /* ... */
 });
