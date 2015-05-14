@@ -4,38 +4,38 @@ $.ajax({
     url: "{{{url.base}}}",
     type: "{{{request.method}}}",
     {{#url.has_params}}
-    data:{
+    data: {
     {{#url.params}}
-        "{{{name}}}":"{{{value}}}",
+        "{{{name}}}": "{{{value}}}",
     {{/url.params}}
     },
     {{/url.has_params}}
     {{#headers.has_headers}}
-    headers:{
+    headers: {
         {{#headers.header_list}}
-        "{{{header_name}}}":"{{{header_value}}}",
+        "{{{header_name}}}": "{{{header_value}}}",
         {{/headers.header_list}}
     },
     {{/headers.has_headers}}
     {{#body.has_raw_body}}
-    processData:false,
-    data:"{{{body.raw_body}}}",
+    processData: false,
+    data: "{{{body.raw_body}}}",
     {{/body.has_raw_body}}
     {{#body.has_long_body}}
-    processData:false,
-    data:"", // set your body string
+    processData: false,
+    data: "", // set your body string
     {{/body.has_long_body}}
     {{#body.has_url_encoded_body}}
-    contentType:"application/x-www-form-urlencoded",
-    data:{
+    contentType: "application/x-www-form-urlencoded",
+    data: {
     {{#body.url_encoded_body}}
-        "{{{name}}}":"{{{value}}}",
+        "{{{name}}}": "{{{value}}}",
     {{/body.url_encoded_body}}
     },
     {{/body.has_url_encoded_body}}
     {{#body.has_json_body}}
-    contentType:"application/json",
-    data:JSON.stringify({{{body.json_body_object}}})
+    contentType: "application/json",
+    data: JSON.stringify({{{body.json_body_object}}})
     {{/body.has_json_body}}
 })
 .done(function(data, textStatus, jqXHR) {
