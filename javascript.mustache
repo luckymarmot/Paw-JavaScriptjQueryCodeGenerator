@@ -1,8 +1,22 @@
-// {{{request.name}}} ({{{request.method}}} {{{url.base}}})
+// {{{request.name}}} ({{{method}}} {{{url.base}}})
 
 $.ajax({
+    {{! ================ url + url params ================ }}
+    {{#has_content_and_url_params}}
+    url: "{{{url.base}}}?" + jQuery.param({
+    {{#url.params}}
+        "{{{name}}}": "{{{value}}}",
+    {{/url.params}}
+    }),
+    {{/has_content_and_url_params}}
+    {{! ================ url (base) ================ }}
+    {{^has_content_and_url_params}}
     url: "{{{url.base}}}",
-    type: "{{{request.method}}}",
+    {{/has_content_and_url_params}}
+    {{! ================ method ================ }}
+    type: "{{{method}}}",
+    {{! ================ url parameters ================ }}
+    {{^has_content_and_url_params}}
     {{#url.has_params}}
     data: {
     {{#url.params}}
@@ -10,6 +24,8 @@ $.ajax({
     {{/url.params}}
     },
     {{/url.has_params}}
+    {{/has_content_and_url_params}}
+    {{! ================ headers ================ }}
     {{#headers.has_headers}}
     headers: {
         {{#headers.header_list}}
@@ -17,14 +33,17 @@ $.ajax({
         {{/headers.header_list}}
     },
     {{/headers.has_headers}}
+    {{! ================ raw body ================ }}
     {{#body.has_raw_body}}
     processData: false,
     data: "{{{body.raw_body}}}",
     {{/body.has_raw_body}}
+    {{! ================ too long body ================ }}
     {{#body.has_long_body}}
     processData: false,
     data: "", // set your body string
     {{/body.has_long_body}}
+    {{! ================ url-encoded body ================ }}
     {{#body.has_url_encoded_body}}
     contentType: "application/x-www-form-urlencoded",
     data: {
@@ -33,6 +52,7 @@ $.ajax({
     {{/body.url_encoded_body}}
     },
     {{/body.has_url_encoded_body}}
+    {{! ================ json body ================ }}
     {{#body.has_json_body}}
     contentType: "application/json",
     data: JSON.stringify({{{body.json_body_object}}})

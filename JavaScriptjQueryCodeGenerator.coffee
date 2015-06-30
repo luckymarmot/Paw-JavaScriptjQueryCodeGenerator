@@ -40,6 +40,7 @@ JavaScriptjQueryCodeGenerator = ->
         json_body = request.jsonBody
         if json_body
             return {
+                "has_body":true
                 "has_json_body":true
                 "json_body_object":@json_body_object json_body, 0
             }
@@ -47,6 +48,7 @@ JavaScriptjQueryCodeGenerator = ->
         url_encoded_body = request.urlEncodedBody
         if url_encoded_body
             return {
+                "has_body":true
                 "has_url_encoded_body":true
                 "url_encoded_body": ({
                     "name": addslashes name
@@ -58,13 +60,19 @@ JavaScriptjQueryCodeGenerator = ->
         if raw_body
             if raw_body.length < 5000
                 return {
+                    "has_body":true
                     "has_raw_body":true
                     "raw_body": addslashes raw_body
                 }
             else
                 return {
+                    "has_body":true
                     "has_long_body":true
                 }
+
+        return {
+            "has_body":false
+        }
 
     @json_body_object = (object, indent = 0) ->
         if object == null
@@ -91,12 +99,22 @@ JavaScriptjQueryCodeGenerator = ->
 
     @generate = (context) ->
         request = context.getCurrentRequest()
+        method = request.method.toUpperCase()
 
         view =
             "request": context.getCurrentRequest()
             "url": @url request
+            "method": method
             "headers": @headers request
             "body": @body request
+            "has_content": method != 'GET' and method != 'HEAD'
+
+        # convenience variable
+        view.has_content_and_url_params = view.has_content && view.url.has_params
+
+        # if not has_content, just remove the body
+        if not view.has_content
+            view.body = null
 
         template = readFile "javascript.mustache"
         Mustache.render template, view
