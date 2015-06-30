@@ -1,6 +1,6 @@
 // {{{request.name}}} ({{{method}}} {{{url.base}}})
 
-$.ajax({
+jQuery.ajax({
     {{! ================ url + url params ================ }}
     {{#has_content_and_url_params}}
     url: "{{{url.base}}}?" + jQuery.param({
