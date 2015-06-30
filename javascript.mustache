@@ -1,5 +1,13 @@
 // {{{request.name}}} ({{{method}}} {{{url.base}}})
 
+{{! ================ multipart body ================ }}
+{{#body.has_multipart_body}}
+var formData = new FormData();
+{{#body.multipart_body}}
+formData.append("{{{name}}}", "{{{value}}}");
+{{/body.multipart_body}}
+
+{{/body.has_multipart_body}}
 jQuery.ajax({
     {{! ================ url + url params ================ }}
     {{#has_content_and_url_params}}
@@ -52,6 +60,12 @@ jQuery.ajax({
     {{/body.url_encoded_body}}
     },
     {{/body.has_url_encoded_body}}
+    {{! ================ multipart body ================ }}
+    {{#body.has_multipart_body}}
+    processData: false,
+    contentType: false,
+    data: formData,
+    {{/body.has_multipart_body}}
     {{! ================ json body ================ }}
     {{#body.has_json_body}}
     contentType: "application/json",
